@@ -2,7 +2,7 @@ import React from "react";
 import { Stack, Box, LinearProgress } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-const Strength = () => {
+const Strength = (props) => {
   return (
     <Box
       sx={{
@@ -34,26 +34,20 @@ const Strength = () => {
             sx={{
               fontSize: "14px",
               opacity: "0.7",
-              color: "red",
-              fontWeight: "bold"
+              fontWeight: "bold",
+              color:"white"
             }}
           >
-            weak
+            {props.strengthText}
           </Typography>
 
           <LinearProgress
             variant="determinate"
-            value={25}
-            color="error"
+            value={props.barProgress}
+            color={props.strengthColor}
             classes={{
               bar: {
                 transition: "none"
-              },
-              colorPrimary: {
-                backgroundColor: "red"
-              },
-              barColorPrimary: {
-                backgroundColor: "white"
               }
             }}
           />

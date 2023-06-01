@@ -1,14 +1,9 @@
 import React from "react";
 import { Stack, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 
-const Checkboxes = () => {
+const Checkboxes = (props) => {
 
-  var [checkStates, setCheckState] = React.useState({
-    ul: false,
-    ll: false, 
-    n: false,
-    s: false,
-  })
+  var [checkStates, setCheckState] = [props.checkStates, props.setCheckState];
 
   function handleChange(event){
     var checkName = event.target.name;

@@ -1,13 +1,40 @@
 import "./styles.css";
 import * as React from "react";
 import { Box, Stack, Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import Password from "./components/Password";
 import CharacterLength from "./components/CharacterLength";
 import Checkboxes from "./components/Checkboxes";
 import Strength from "./components/Strength";
+import generatePassword from "./generator";
+import strengthDeterminer from "./strengthCalculator";
 
 export default function App() {
+
+  const [password, setPassword] = React.useState("Password Here!");
+  const [value, setValue] = React.useState(0);
+  const [checkStates, setCheckState] = React.useState({
+    ul: false,
+    ll: false, 
+    n: false,
+    s: false,
+  })
+  const [strengthColor, setStrengthColor] = React.useState('error');
+  const [strengthText, setStrengthText] = React.useState("Not good");
+  const [barProgess, setbarProgress] = React.useState(33);
+
+  function displayNewPassword(){
+    var newPass = generatePassword(value, checkStates);
+    var [newText, newColor, newBarValue] = strengthDeterminer(value, checkStates);
+    setbarProgress(newBarValue);
+    setStrengthColor(newColor);
+    setStrengthText(newText);
+    setPassword(newPass);
+  }
+
+
+
+
+
   return (
     <div className="App">
       <Box
@@ -29,10 +56,10 @@ export default function App() {
           }}
         >
           <Stack direction="column">
-            <Password />
-            <CharacterLength />
-            <Checkboxes />
-            <Strength />
+            <Password password={password} setPassword={setPassword}/>
+            <CharacterLength value={value} setValue={setValue}/>
+            <Checkboxes checkStates={checkStates} setCheckState={setCheckState}/>
+            <Strength strengthColor={strengthColor} strengthText={strengthText} barProgress={barProgess}/>
             <Button
               variant="contained"
               sx={{
@@ -43,6 +70,7 @@ export default function App() {
                 pb: "10px",
                 fontSize: "16px"
               }}
+              onClick={displayNewPassword}
             >
               GENERATE
             </Button>

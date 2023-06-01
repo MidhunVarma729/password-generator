@@ -1,6 +1,3 @@
-imp
-
-
 var lowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 var upperCase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 var numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -28,30 +25,79 @@ function shuffler(s) {
 }
 
 function generatePassword(len, rules){
+    if(len === 0)
+    return "🦉"
+
+    var div = rules['ul'] + rules['s'] + rules['ll'] + rules['n'];
+    var c = div;
     if(rules['ul']){
-        ucl_count = Math.floor(0.2*len)
+        if(c === 1)
+        {
+            ucl_count = len - numbers_count - symbol_count - lcl_count;
+            --c;
+        }
+        else
+        {
+            ucl_count = Math.floor(len/div);
+            --c;
+        }
     }
     if(rules['s']){
-        symbol_count = Math.floor(0.2*len)
+        if(c === 1)
+        {
+            symbol_count = len - numbers_count - ucl_count - lcl_count;
+            --c;
+        }
+        else
+        {
+            symbol_count = Math.floor(len/div);
+            --c;
+        }
     }
     if(rules['n']){
-        numbers_count = Math.floor(0.2*len)
+        if(c === 1)
+        {
+            numbers_count = len - symbol_count - ucl_count - lcl_count;
+            --c;
+        }
+        else
+        {
+            numbers_count = Math.floor(len/div);
+            --c;
+        }
     }
-    lcl_count = len - numbers_count - symbol_count - ucl_count;
+    if(rules['ll']){
+        if(c === 1)
+        {
+            lcl_count = len - numbers_count - ucl_count - symbol_count;
+            --c;
+        }
+        else
+        {
+            lcl_count = Math.floor(len/div);
+            --c;
+        }
+    }
 
     var s = '';
-    while(ucl_count--){
+    while(ucl_count){
+        --ucl_count;
         s+=getRandomItem(upperCase);
     }
-    while(symbol_count--){
+    while(symbol_count){
+        --symbol_count;
         s+=getRandomItem(symbols);
     }
-    while(numbers_count--){
+    while(numbers_count){
+        --numbers_count;
         s+=getRandomItem(numbers);
     }
-    while(lcl_count--){
+    while(lcl_count){
+        --lcl_count;
         s+=getRandomItem(lowerCase);
     }
     s = shuffler(s);
-    console.log(s);
+    return s;
 }
+
+export default generatePassword;

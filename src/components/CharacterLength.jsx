@@ -2,8 +2,8 @@ import React from "react";
 import { Stack, Slider, Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-const CharacterLength = () => {
-  const [value, setValue] = React.useState(0);
+const CharacterLength = (props) => {
+  const [value, setValue] = [props.value, props.setValue];
   const handleChange = (event, newValue) => {
     if (typeof newValue === "number") {
       setValue(newValue);
@@ -30,7 +30,7 @@ const CharacterLength = () => {
         value={value}
         min={0}
         step={1}
-        max={32}
+        max={24}
         onChange={handleChange}
         sx={{ color: "#2A8B8B" }}
       />
